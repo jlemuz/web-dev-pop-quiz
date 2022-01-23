@@ -41,6 +41,10 @@ button{
     text-align: left;
 }
 
+#submit_name{
+    width: fit-content;
+}
+
 button:hover{
     opacity: 80%;
     cursor: pointer;

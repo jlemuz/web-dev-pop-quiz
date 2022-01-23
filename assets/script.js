@@ -50,8 +50,7 @@ questionList = [
     }
 ]
 
-//document.querySelector("#question-text").textContent= questionList[0].question;
-//document.querySelector("#btn1").textContent = questionList[0].answers[0].text;
+
 var start = document.querySelector("#start")
 start.addEventListener('click', displayquestion)
 var question_num=0;
@@ -71,21 +70,56 @@ function displayquestion(){
         return question_num++;
     }
     else{
-        quest = document.querySelector(".question");
-        var end = document.createElement('h1');
-        end.textContent='End'
-        quest.appendChild(end);
+        end_page();
         
     }
 }
 
 
+function end_page(){
+    quest = document.querySelector(".question");
+    var end = document.createElement('h1');
+    end.textContent='All done'
+
+    var score_text = document.createElement('p');
+    score_text.textContent = "Your final score is " 
+
+    var enter_name= document.createElement('input');
+    enter_name.setAttribute('id', 'score_name');
+    enter_name.setAttribute('required', '');
+
+    var submit_name = document.createElement('button');
+    submit_name.textContent = "Submit";
+    submit_name.setAttribute('id', 'submit_name');
+    submit_name.addEventListener('click', goToBoard);
+
+    quest.appendChild(end);
+    quest.appendChild(score_text);
+    quest.appendChild(enter_name);
+    quest.appendChild(submit_name);
+}
+
+
+let scoreboard = [];
+
+function goToBoard(){
+    clearQuestion();
+    scoreboard.push(document.querySelector("#score_name").value);
+    console.log(document.querySelector("#score_name").value);
+    localStorage.setItem("scores", JSON.stringify(scoreboard));
+}
+
+
 function clearQuestion(){
     quest = document.querySelector(".question");
-    quest.removeChild(quest.lastElementChild);
+    while (quest.firstChild) {
+        quest.removeChild(quest.firstChild);
+    }
     
     ans = document.querySelector(".answer");
     while (ans.firstChild) {
         ans.removeChild(ans.firstChild);
     }
 }
+
+
