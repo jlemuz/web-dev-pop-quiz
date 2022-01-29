@@ -1,5 +1,4 @@
 body{
-    display:flex;
     padding: 0;
     margin: 0;
     width: 100vw;
@@ -8,22 +7,39 @@ body{
     align-items: center;
 }
 
+nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.time{
+    padding-right: 15px;
+}
+
+
 .container {
     display: flex;
-    align-items: flex-start;
     flex-direction: column;
-    max-width: 80%;
+    justify-content: right;
+    align-items: baseline;
+    padding-left: 25%;
 }
 
 .question{
     flex-wrap: wrap;
     max-width: inherit;
+    max-width: 60%;
+}
+
+.time{
+    display: block;
 }
 
 .answer{
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    padding-left: 25%;
 }
 
 button{
@@ -50,6 +66,20 @@ button:hover{
     cursor: pointer;
 }
 
+li{
+    background-color: #d3b4e7;
+    width: 50%;
+    padding: 5px;
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.result{
+    display: flex;
+    justify-content: left;
+    padding-left: 25%;
+}
+
 .result-text{
     font-size: 24px;
     color: gray;
@@ -59,11 +89,27 @@ button:hover{
 #start-container{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 500px;
+    width: 100vw;
 }
 
 #start-container > p{
     font-size: 20px;
     text-align: center;
+    width: 600px;
+    padding: 0;
+    margin: 0;
+}
+
+#start{
+    width: 100px;
+    padding: 10px;
+}
+
+#done, #score_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
