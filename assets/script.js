@@ -46,13 +46,15 @@ questionList = [
         {text:'1. Javascript', correct: false},
         {text:'2. terminal/bash', correct: false},
         {text:'3. for loops', correct: false},
-        {text:'4. console.log', correct: false}
+        {text:'4. console.log', correct: true}
     ]
     }
 ]
-var score = 75;
 
 var timeLeft = 75;
+var timeInterval;
+var score=75;
+var element =  document.querySelector('#done');
 function countdown() {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function () {
@@ -61,19 +63,32 @@ function countdown() {
         // Set the `textContent` of `timerEl` to show the remaining seconds
         timerEl.textContent = timeLeft + ' seconds remaining';
         // Decrement `timeLeft` by 1
-        timeLeft--;
+        timeLeft--
+        ;
+        if(document.querySelector('#done')){
+            clearInterval(timeInterval);
+            score = timeLeft+1;
+            return score;
+        }
       } else if (timeLeft === 1) {
         // When `timeLeft` is equal to 1, rename to 'second' instead of 'seconds'
         timerEl.textContent = timeLeft + ' second remaining';
         timeLeft--;
-      } else {
+      } else{
         // Once `timeLeft` gets to 0, set `timerEl` to an empty string
         timerEl.textContent = '';
         // Use `clearInterval()` to stop the timer
         clearInterval(timeInterval);
+        score = timeLeft
+        ;
+        clearQuestion();
+        clearAnswer();
+        end_page();
         // Call the `displayMessage()` function
       }
     }, 1000);
+
+
   }
 
 
@@ -121,8 +136,7 @@ function checkAnswer(e){
             result.textContent = "Correct!";
         }
         else{
-            score-=10;
-            console.log(score);
+            timeLeft-=10;
             result.textContent="Wrong!";
             }
     }
@@ -139,14 +153,14 @@ function end_page(){
 
     //Renders the final score
     var score_text = document.createElement('p');
-    score_text.textContent = "Your final score is :" 
-    score_text.setAttribute('id', 'score_text')
+    score_text.textContent = "Your final score is :" + timeLeft;
+    score_text.setAttribute('id', 'score_text');
 
     //Renders the input box for the name
     var enter_name= document.createElement('input');
     enter_name.setAttribute('id', 'score_name');
-    enter_name.setAttribute('required', '');
     enter_name.setAttribute('label', 'Enter Name: ')
+    enter_name.required = 'true';
 
 
     //Renders the submit button
@@ -161,6 +175,8 @@ function end_page(){
     quest.appendChild(score_text);
     quest.appendChild(enter_name);
     quest.appendChild(submit_name);
+
+
 }
 
 
@@ -200,13 +216,14 @@ function save(e){
     clearAnswer();
 
     var new_name = document.querySelector("#score_name").value;
+    var new_score = score;
 
    if (localStorage.getItem('score') == null){
         localStorage.setItem('score', '[]');
    }
 
    var old_names = JSON.parse(localStorage.getItem('score'));
-   old_names.push(new_name);
+   old_names.push({new_name, new_score});
 
    localStorage.setItem('score', JSON.stringify(old_names));
    clearEnd();
@@ -215,13 +232,14 @@ function save(e){
 
 }
 
-
-
 function create_score(){
+        document.querySelector("#view-score").textContent='';
     contain = document.querySelector('.container');
     var score_list = document.createElement('h1');
     score_list.textContent="High Scores";
     contain.appendChild(score_list);
+    var timerEl = document.querySelector(".time");
+    timerEl.textContent='';
 
     if(localStorage.getItem('score') == null){
 
@@ -229,14 +247,17 @@ function create_score(){
     else{
     for(i=0;i<JSON.parse(localStorage.score).length;i++){
         var list = document.createElement('li');
-        list.textContent=([i+1] + '. ' + JSON.parse(localStorage.score)[i] + ' - ');
+        list.textContent=([i+1] + '. ' + JSON.parse(localStorage.score)[i].new_name + ' - '+JSON.parse(localStorage.score)[i].new_score);
         contain.appendChild(list);
     }
 }
-    var butt = document.querySelector('.answer')
+    var buttons = document.createElement('div');
+    contain.appendChild(buttons);    
+    buttons.setAttribute('class', 'buttons');
+
     var back = document.createElement('button');
     back.textContent='Go Back'
-    contain.appendChild(back);
+    buttons.appendChild(back);
     back.addEventListener('click', ()=>{window.location.reload();})
 
     var clear= document.createElement('button');
@@ -247,7 +268,34 @@ function create_score(){
         create_score();
     });
     clear.textContent = ('Clear high scores')
-    contain.appendChild(clear);
+    buttons.appendChild(clear);
 }
 
+function clear_score(){
+    clear = document.querySelector(".container");
+    while (clear.firstChild) {
+        clear.removeChild(clear.firstChild);
+};
+};
+
 var timerEl = document.querySelector(".time");
+
+
+document.querySelector('#view-score').addEventListener('click', (e)=>{
+    e.preventDefault();
+    if(document.querySelector("#start-container")){
+        clearStart();
+        clearQuestion();
+    clearAnswer();
+        create_score();
+    }
+    else{
+    clearQuestion();
+    clearAnswer();
+    clear_score();
+    create_score();
+    clearEnd();}
+
+    var remove = document.querySelector('#view-score');
+    remove.style.visibility = "hidden";
+})
