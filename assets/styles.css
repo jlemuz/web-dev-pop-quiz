@@ -7,6 +7,7 @@ body{
     align-items: center;
 }
 
+/* For the high score hyperlink and timer */
 nav{
     display: flex;
     justify-content: space-between;
@@ -17,7 +18,7 @@ nav{
     padding-right: 15px;
 }
 
-
+/* Holds the questions and answer choices */
 .container {
     display: flex;
     flex-direction: column;
@@ -41,6 +42,7 @@ nav{
     flex-direction: column;
 }
 
+/* This is the formatting for the answer buttons */
 button{
     background-color: #470450;
     border: none;
@@ -56,10 +58,12 @@ button{
     text-align: left;
 }
 
+/* Submit name button */
 #submit_name{
     width: fit-content;
 }
 
+/* Reduces the opacity of answer buttons */
 button:hover{
     opacity: 80%;
     cursor: pointer;
@@ -72,7 +76,7 @@ li{
     margin-bottom: 10px;
     list-style: none;
 }
-
+/* Holds the result text 'Correct'/'Wrong' */
 .result{
     display: flex;
     justify-content: left;
@@ -84,7 +88,7 @@ li{
     color: gray;
     font-style: italic;
 }
-
+/* Start  container for the beginning page*/
 #start-container{
     display: flex;
     flex-direction: column;
@@ -114,6 +118,7 @@ li{
     padding-left: 25%;
 }
 
+/* Go back and clear score buttons */
 .buttons{
     display: flex;
     width: 400px;
