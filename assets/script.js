@@ -153,9 +153,11 @@ function end_page(){
 
     //Renders the final score
     var score_text = document.createElement('p');
-    score_text.textContent = "Your final score is :" + timeLeft;
+    score_text.textContent = "Your final score is :" + timeLeft ;
     score_text.setAttribute('id', 'score_text');
 
+    var init = document.createElement('p');
+    init.textContent='Enter Initials';
     //Renders the input box for the name
     var enter_name= document.createElement('input');
     enter_name.setAttribute('id', 'score_name');
